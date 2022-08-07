@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Tsatsura, Inc. All rights reserved.
+ */
+-->
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/PageLayout/etc/layouts.xsd">
+    <head>
+        <css src="Amasty_TsatsuraModule::css/style.css" rel="stylesheet" type="text/css"  />
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <container name="Amasty_Tsatsura.main" htmlTag="section" htmlClass="container-add-form">
+                <block name="Amasty_Tsatsura.hello"
+                       template="Amasty_TsatsuraModule::hello.phtml">
+                </block>
+                <block name="Amasty_Tsatsura.form"
+                       template="Amasty_TsatsuraModule::form.phtml"
+                       class="Amasty\TsatsuraModule\Block\Form">
+                    <block name="Amasty_Tsatsura.additional"
+                           template="Amasty_TsatsuraModule::additional.phtml">
+                    </block>
+                    <arguments>
+                        <argument name="css_class_form" xsi:type="string">form-submit</argument>
+                        <argument name="css_class_input" xsi:type="string">form-submit__input</argument>
+                        <argument name="css_class_button" xsi:type="string">form-submit__button</argument>
+                        <argument name="css_class_additional" xsi:type="string">form-submit__additional</argument>
+                    </arguments>
+                </block>
+            </container>
+
+        </referenceContainer>
+    </body>
+</page>
