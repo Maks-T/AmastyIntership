@@ -2,12 +2,11 @@
 /** @var \Amasty\TsatsuraModule\Block\Form $block */
 ?>
 
-
 <form class="<?= $block->getData('css_class_form');?>">
     <input type="text" name="sku" class="<?= $block->getData('css_class_input'); ?>"/>
     <input type="number" name="qty" class="<?= $block->getData('css_class_input'); ?>"/>
     <div class="<?= $block->getData('css_class_additional'); ?>">
         <?= $block->getChildHtml(); ?>
     </div>
-    <button type="submit" class="<?= $block->getData('css_class_button'); ?>">Submit</button>
+    <button type="submit" class="<?= $block->getData('css_class_button'); ?>"><?= __('Submit') ?></button>
 </form>
