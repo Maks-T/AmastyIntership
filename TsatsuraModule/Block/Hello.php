@@ -5,7 +5,7 @@ namespace Amasty\TsatsuraModule\Block;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\View\Element\Template;
 
-class Form extends Template
+class Hello extends Template
 {
     private ScopeConfigInterface $scopeConfig;
 
@@ -20,14 +20,8 @@ class Form extends Template
         $this->scopeConfig = $scopeConfig;
     }
 
-    public function isDisable():string
+    public function getWelcomeText():string
     {
-        return $this->scopeConfig->isSetFlag('tsatsura_config/general/enabled_qty')?'':' disable';
-    }
-
-    public function getValueQty():int|string
-    {
-        $valueQty = $this->scopeConfig->getValue('tsatsura_config/general/qty_value');
-        return $valueQty ? (int)$valueQty : '';
+        return $this->scopeConfig->getValue('tsatsura_config/general/welcome_text') ?:'something went wrong';
     }
 }

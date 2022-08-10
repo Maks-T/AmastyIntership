@@ -73,3 +73,7 @@ body {
     font-size: 2rem;
     font-weight: bolder;
 }
+
+.disable {
+    display: none;
+}
