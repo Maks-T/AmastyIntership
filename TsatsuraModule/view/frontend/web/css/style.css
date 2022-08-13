@@ -54,8 +54,7 @@ body {
 }
 
 .form-submit__button:active,
-.form-submit__button:focus
-{
+.form-submit__button:focus {
     transform: translate(1px, 1px);
 }
 
@@ -72,8 +71,4 @@ body {
 
     font-size: 2rem;
     font-weight: bolder;
-}
-
-.disable {
-    display: none;
 }

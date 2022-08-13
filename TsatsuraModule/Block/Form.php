@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace Amasty\TsatsuraModule\Block;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
@@ -7,7 +9,14 @@ use Magento\Framework\View\Element\Template;
 
 class Form extends Template
 {
-    private ScopeConfigInterface $scopeConfig;
+    const QTY_PARAM = 'tsatsura_config/general/enabled_qty';
+
+    const QTY_VALUE_PARAM = 'tsatsura_config/general/qty_value';
+
+    /**
+     * @var ScopeConfigInterface
+     */
+    private $scopeConfig;
 
     public function __construct(
         Template\Context $context,
@@ -20,14 +29,13 @@ class Form extends Template
         $this->scopeConfig = $scopeConfig;
     }
 
-    public function isDisable():string
+    public function isEnabledQty(): bool
     {
-        return $this->scopeConfig->isSetFlag('tsatsura_config/general/enabled_qty')?'':' disable';
+        return $this->scopeConfig->isSetFlag(self::QTY_PARAM);
     }
 
-    public function getValueQty():int|string
+    public function getValueQty(): int
     {
-        $valueQty = $this->scopeConfig->getValue('tsatsura_config/general/qty_value');
-        return $valueQty ? (int)$valueQty : '';
+        return (int)$this->scopeConfig->getValue(self::QTY_VALUE_PARAM);
     }
 }

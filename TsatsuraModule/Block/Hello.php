@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace Amasty\TsatsuraModule\Block;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
@@ -7,7 +9,11 @@ use Magento\Framework\View\Element\Template;
 
 class Hello extends Template
 {
-    private ScopeConfigInterface $scopeConfig;
+    const WELCOME_TEXT_PARAM = 'tsatsura_config/general/welcome_text';
+    /**
+     * @var ScopeConfigInterface
+     */
+    private $scopeConfig;
 
     public function __construct(
         Template\Context $context,
@@ -20,8 +26,8 @@ class Hello extends Template
         $this->scopeConfig = $scopeConfig;
     }
 
-    public function getWelcomeText():string
+    public function getWelcomeText(): string
     {
-        return $this->scopeConfig->getValue('tsatsura_config/general/welcome_text') ?:'something went wrong';
+        return $this->scopeConfig->getValue(self::WELCOME_TEXT_PARAM);
     }
 }

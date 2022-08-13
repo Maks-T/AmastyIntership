@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace Amasty\TsatsuraModule\Controller\Index;
 
 use Magento\Catalog\Api\ProductRepositoryInterface;
@@ -7,31 +9,52 @@ use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\App\ActionInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Controller\Result\ForwardFactory;
 use Magento\Framework\Controller\ResultFactory;
 
 class Index implements ActionInterface
 {
+    const ENABLED_PARAM = 'tsatsura_config/general/enabled';
     /**
      * @var ResultFactory
      */
-    private ResultFactory $resultFactory;
+    private $resultFactory;
 
-    private ScopeConfigInterface $scopeConfig;
+    /**
+     * @var ForwardFactory
+     */
+    private $forwardFactory;
 
-    private Session $checkoutSession;
+    /**
+     * @var ScopeConfigInterface
+     */
+    private $scopeConfig;
 
-    private ProductRepositoryInterface $productRepository;
+    /**
+     * @var Session
+     */
+    private $checkoutSession;
 
-    private CollectionFactory $collectionFactory;
+    /**
+     * @var ProductRepositoryInterface
+     */
+    private $productRepository;
+
+    /**
+     * @var CollectionFactory
+     */
+    private $collectionFactory;
 
     public function __construct(
         ResultFactory $resultFactory,
+        ForwardFactory $forwardFactory,
         ScopeConfigInterface $scopeConfig,
         Session $checkoutSession,
         ProductRepositoryInterface $productRepository,
         CollectionFactory $collectionFactory
     ) {
        $this->resultFactory = $resultFactory;
+       $this->forwardFactory = $forwardFactory;
        $this->scopeConfig = $scopeConfig;
        $this->checkoutSession = $checkoutSession;
        $this->productRepository = $productRepository;
@@ -40,11 +63,14 @@ class Index implements ActionInterface
 
     public function execute()
     {
-       if ($this->scopeConfig->isSetFlag('tsatsura_config/general/enabled')) {
+
+       if ($this->scopeConfig->isSetFlag(self::ENABLED_PARAM)) {
             return $this->resultFactory->create(ResultFactory::TYPE_PAGE);
         } else {
-            die('The Tsatsura module is currently disabled in the admin settings.
-Please go to module settings and enable it.');
+           $resultForward = $this->forwardFactory->create();
+           $resultForward->setController('index');
+           $resultForward->forward('defaultNoRoute');
+           return $resultForward;
         }
 
        /* $quote = $this->checkoutSession->getQuote();

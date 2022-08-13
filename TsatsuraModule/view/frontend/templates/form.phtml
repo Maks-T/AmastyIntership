@@ -2,12 +2,15 @@
 /** @var \Amasty\TsatsuraModule\Block\Form $block */
 ?>
 
-<form class="<?= $block->getData('css_class_form');?>">
+<form class="<?= $block->getData('css_class_form'); ?>">
     <input type="text" name="sku" class="<?= $block->getData('css_class_input'); ?>"/>
+    <?php if ($block->isEnabledQty()): ?>
     <input type="number"
            name="qty"
-           class="<?= $block->getData('css_class_input').$block->isDisable();?>"
-           value=<?= $block->getValueQty();?> />
+           min="1"
+           class="<?= $block->getData('css_class_input') ?>"
+           value="<?= $block->getValueQty(); ?>"/>
+    <?php endif; ?>
     <div class="<?= $block->getData('css_class_additional'); ?>">
         <?= $block->getChildHtml(); ?>
     </div>

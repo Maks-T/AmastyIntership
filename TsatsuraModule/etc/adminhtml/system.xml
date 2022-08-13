@@ -32,7 +32,7 @@
                 </field>
                 <field id="qty_value" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Quantity product</label>
-                    <validate>integer</validate>
+                    <validate>required-entry integer</validate>
                     <depends>
                         <field id="enabled_qty">1</field>
                     </depends>
