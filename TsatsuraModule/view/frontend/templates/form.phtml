@@ -9,7 +9,8 @@
            name="qty"
            min="1"
            class="<?= $block->getData('css_class_input') ?>"
-           value="<?= $block->getValueQty(); ?>"/>
+           value="<?= $block->getValueQty(); ?>"
+           data-validate="{'not-negative-amount':true}"/>
     <?php endif; ?>
     <div class="<?= $block->getData('css_class_additional'); ?>">
         <?= $block->getChildHtml(); ?>

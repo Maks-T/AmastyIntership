@@ -4,30 +4,29 @@ declare(strict_types=1);
 
 namespace Amasty\TsatsuraModule\Block;
 
-use Magento\Framework\App\Config\ScopeConfigInterface;
+use Amasty\TsatsuraModule\Model\ConfigProvider;
 use Magento\Framework\View\Element\Template;
 
 class Hello extends Template
 {
-    const WELCOME_TEXT_PARAM = 'tsatsura_config/general/welcome_text';
     /**
-     * @var ScopeConfigInterface
+     * @var ConfigProvider
      */
-    private $scopeConfig;
+    private $configProvider;
 
     public function __construct(
         Template\Context $context,
-        ScopeConfigInterface $scopeConfig,
+        ConfigProvider $configProvider,
         array $data = []
     )
     {
         parent::__construct($context, $data);
 
-        $this->scopeConfig = $scopeConfig;
+        $this->configProvider = $configProvider;
     }
 
     public function getWelcomeText(): string
     {
-        return $this->scopeConfig->getValue(self::WELCOME_TEXT_PARAM);
+        return $this->configProvider->getWelcomeText();
     }
 }

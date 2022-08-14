@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace Amasty\TsatsuraModule\Controller\Index;
 
+use Amasty\TsatsuraModule\Model\ConfigProvider;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\App\ActionInterface;
-use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Controller\Result\ForwardFactory;
 use Magento\Framework\Controller\ResultFactory;
 
 class Index implements ActionInterface
 {
-    const ENABLED_PARAM = 'tsatsura_config/general/enabled';
     /**
      * @var ResultFactory
      */
@@ -26,9 +25,9 @@ class Index implements ActionInterface
     private $forwardFactory;
 
     /**
-     * @var ScopeConfigInterface
+     * @var ConfigProvider
      */
-    private $scopeConfig;
+    private $configProvider;
 
     /**
      * @var Session
@@ -48,14 +47,14 @@ class Index implements ActionInterface
     public function __construct(
         ResultFactory $resultFactory,
         ForwardFactory $forwardFactory,
-        ScopeConfigInterface $scopeConfig,
+        ConfigProvider $configProvider,
         Session $checkoutSession,
         ProductRepositoryInterface $productRepository,
         CollectionFactory $collectionFactory
     ) {
        $this->resultFactory = $resultFactory;
        $this->forwardFactory = $forwardFactory;
-       $this->scopeConfig = $scopeConfig;
+       $this->configProvider = $configProvider;
        $this->checkoutSession = $checkoutSession;
        $this->productRepository = $productRepository;
        $this->collectionFactory = $collectionFactory;
@@ -64,7 +63,7 @@ class Index implements ActionInterface
     public function execute()
     {
 
-       if ($this->scopeConfig->isSetFlag(self::ENABLED_PARAM)) {
+       if ($this->configProvider->isModuleEnabled()) {
             return $this->resultFactory->create(ResultFactory::TYPE_PAGE);
         } else {
            $resultForward = $this->forwardFactory->create();
