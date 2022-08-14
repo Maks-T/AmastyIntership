@@ -9,6 +9,8 @@ use Magento\Framework\View\Element\Template;
 
 class Form extends Template
 {
+    const FORM_ACTION = 'tsatsura/index/formsubmit';
+
     /**
      * @var ConfigProvider
      */
@@ -33,5 +35,10 @@ class Form extends Template
     public function getValueQty(): int
     {
         return $this->configProvider->getValueQty();
+    }
+
+    public function getFormAction()
+    {
+        return $this->getUrl(self::FORM_ACTION, ['_secure' => true]);
     }
 }

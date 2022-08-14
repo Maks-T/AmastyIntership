@@ -62,7 +62,6 @@ class Index implements ActionInterface
 
     public function execute()
     {
-
        if ($this->configProvider->isModuleEnabled()) {
             return $this->resultFactory->create(ResultFactory::TYPE_PAGE);
         } else {
@@ -72,26 +71,6 @@ class Index implements ActionInterface
            return $resultForward;
         }
 
-       /* $quote = $this->checkoutSession->getQuote();
-
-        if (!$quote->getId()) {
-            $quote->save();
-        }*/
-
-        //$product = $this->productRepository->get('24-MB01');
-
-       /* $productCollection = $this->collectionFactory->create();
-        $productCollection->addAttributeToFilter('sku', ['like' => '24-MB%']);
-        $productCollection->addAttributeToSelect('sku');
-
-        foreach ($productCollection->getItems() as $item) {
-            echo $item->getSku();
-            echo '<br>';
-        }*/
-
-        /*$quote->addProduct($product, 1);
-        $quote->save();*/
-        /*die('done');*/
-        //return $this->resultFactory->create(ResultFactory::TYPE_PAGE);
+        return $this->resultFactory->create(ResultFactory::TYPE_PAGE);
     }
 }
