@@ -16,6 +16,9 @@ use Magento\Quote\Model\QuoteRepository;
 
 class FormSubmit implements ActionInterface
 {
+    public const SKU_PARAM = 'sku';
+    public const QTY_PARAM = 'qty';
+
     /**
      * @var ResultFactory
      */
@@ -78,14 +81,14 @@ class FormSubmit implements ActionInterface
          }
 
         try {
-            $productSkuValue = $this->request->getParam('sku');
-            $productQtyValue = $this->request->getParam('qty');
+            $productSkuValue = $this->request->getParam(self::SKU_PARAM);
+            $productQtyValue = $this->request->getParam(self::QTY_PARAM);
             $product = $this->productRepository->get($productSkuValue);
 
             if ($product->getTypeId() !== Type::TYPE_SIMPLE) {
                 $this->messageManager->addWarningMessage
                 (
-                    __("Product with SKU={$productSkuValue} is a {$product->getTypeId()} type. Only simple product is available")
+                    __('Product with SKU=%1 is a %2 type. Only simple product is available', $productSkuValue, $product->getTypeId())
                 );
 
                 return $this->resultRedirect();
@@ -94,7 +97,7 @@ class FormSubmit implements ActionInterface
             $this->quoteRepository->save($quote);
             $this->messageManager->addSuccessMessage
             (
-                __("Product with SKU={$productSkuValue} in the amount of {$productQtyValue} pieces added to cart")
+                __('Product with SKU=%1 in the amount of %2 pieces added to cart', $productSkuValue, $productQtyValue)
             );
         } catch (\Exception $e) {
             $this->messageManager->addErrorMessage($e->getMessage());

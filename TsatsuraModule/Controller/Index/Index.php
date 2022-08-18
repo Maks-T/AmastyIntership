@@ -68,6 +68,7 @@ class Index implements ActionInterface
            $resultForward = $this->forwardFactory->create();
            $resultForward->setController('index');
            $resultForward->forward('defaultNoRoute');
+
            return $resultForward;
         }
 

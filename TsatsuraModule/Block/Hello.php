@@ -18,8 +18,7 @@ class Hello extends Template
         Template\Context $context,
         ConfigProvider $configProvider,
         array $data = []
-    )
-    {
+    ) {
         parent::__construct($context, $data);
 
         $this->configProvider = $configProvider;
