@@ -2,12 +2,23 @@
 /** @var \Amasty\TsatsuraModule\Block\Form $block */
 ?>
 
-
-<form class="<?= $block->getData('css_class_form');?>">
-    <input type="text" name="sku" class="<?= $block->getData('css_class_input'); ?>"/>
-    <input type="number" name="qty" class="<?= $block->getData('css_class_input'); ?>"/>
+<form class="<?= $block->getData('css_class_form'); ?>"
+      action="<?= $block->getFormAction() ?>"
+      method="post"
+      data-mage-init='{"validation": {}}'>
+    <input type="text"
+           name="sku"
+           class="<?= $block->getData('css_class_input'); ?>"
+           data-validate="{'required-entry':true}"/>
+    <?php if ($block->isEnabledQty()): ?>
+    <input type="number"
+           name="qty"
+           class="<?= $block->getData('css_class_input') ?>"
+           value="<?= $block->getValueQty(); ?>"
+           data-validate="{'not-negative-amount':true, 'required-entry':true}"/>
+    <?php endif; ?>
     <div class="<?= $block->getData('css_class_additional'); ?>">
         <?= $block->getChildHtml(); ?>
     </div>
-    <button type="submit" class="<?= $block->getData('css_class_button'); ?>">Submit</button>
+    <button type="submit" class="<?= $block->getData('css_class_button'); ?>"><?= __('Submit') ?></button>
 </form>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Tsatsura, Inc. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <tsatsura_config>
+            <general>
+                <enabled>1</enabled>
+                <welcome_text>Hello</welcome_text>
+                <enabled_qty>1</enabled_qty>
+                <qty_value>1</qty_value>
+            </general>
+        </tsatsura_config>
+    </default>
+</config>

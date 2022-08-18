@@ -12,7 +12,8 @@
         <referenceContainer name="content">
             <container name="Amasty_Tsatsura.main" htmlTag="section" htmlClass="container-add-form">
                 <block name="Amasty_Tsatsura.hello"
-                       template="Amasty_TsatsuraModule::hello.phtml">
+                       template="Amasty_TsatsuraModule::hello.phtml"
+                       class="Amasty\TsatsuraModule\Block\Hello">
                 </block>
                 <block name="Amasty_Tsatsura.form"
                        template="Amasty_TsatsuraModule::form.phtml"
@@ -28,7 +29,6 @@
                     </arguments>
                 </block>
             </container>
-
         </referenceContainer>
     </body>
 </page>

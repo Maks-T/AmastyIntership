@@ -7,10 +7,8 @@ namespace Amasty\TsatsuraModule\Block;
 use Amasty\TsatsuraModule\Model\ConfigProvider;
 use Magento\Framework\View\Element\Template;
 
-class Form extends Template
+class Hello extends Template
 {
-    const FORM_ACTION = 'tsatsura/index/formsubmit';
-
     /**
      * @var ConfigProvider
      */
@@ -27,18 +25,8 @@ class Form extends Template
         $this->configProvider = $configProvider;
     }
 
-    public function isEnabledQty(): bool
+    public function getWelcomeText(): string
     {
-        return $this->configProvider->isEnabledQty();
-    }
-
-    public function getValueQty(): int
-    {
-        return $this->configProvider->getValueQty();
-    }
-
-    public function getFormAction()
-    {
-        return $this->getUrl(self::FORM_ACTION, ['_secure' => true]);
+        return $this->configProvider->getWelcomeText();
     }
 }

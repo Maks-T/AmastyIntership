@@ -1,1 +1,5 @@
-<p class="greetings">Hello World!</p>
+<?php
+/** @var \Amasty\TsatsuraModule\Block\Hello $block */
+?>
+
+<p class="greetings"><?= $block->getWelcomeText(); ?></p>
