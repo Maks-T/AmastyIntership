@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Amasty\TsatsuraModule\Model;
 
-use Amasty\TsatsuraModule\Model\ConfigProviderAbstract;
-
 class ConfigProvider extends ConfigProviderAbstract
 {
     const ENABLED_PARAM = 'general/enabled';
