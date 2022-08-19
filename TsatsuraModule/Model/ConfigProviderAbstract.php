@@ -25,19 +25,13 @@ abstract class ConfigProviderAbstract
     protected $storeManager;
 
     public function __construct(
-        ScopeConfigInterface $scopeConfig,
-        StoreManagerInterface $storeManager
+        ScopeConfigInterface $scopeConfig
     ) {
         $this->scopeConfig = $scopeConfig;
-        $this->storeManager = $storeManager;
     }
 
     public function getValue($path, $storeId = null, $scope = 'store'): mixed
     {
-        if (!$storeId) {
-            $storeId = $this->storeManager->getStore()->getId();
-        }
-
         return $this->scopeConfig->getValue($this->pathPrefix . $path, $scope, $storeId);
     }
 }

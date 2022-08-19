@@ -1,0 +1,13 @@
+<div>
+    <label for="tsatsura-search-input">Search for sku: </label>
+    <input type="text" name="sku-search" id="tsatsura-search-input" data-bind="textInput: searchText"/>
+    <div class="autocomplete-list">
+        <ul data-bind="foreach: searchResult">
+            <li>
+                <span data-bind="text: sku"></span>
+                <span data-bind="text: name"></span>
+            </li>
+        </ul>
+    </div>
+
+</div>

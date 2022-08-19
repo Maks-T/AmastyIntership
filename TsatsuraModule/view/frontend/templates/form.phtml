@@ -10,6 +10,10 @@
            name="sku"
            class="<?= $block->getData('css_class_input'); ?>"
            data-validate="{'required-entry':true}"/>
+    <div data-bind="scope: 'tsatsuraModuleAutocomplete'">
+        <!-- ko template: getTemplate() -->
+        <!-- /ko -->
+    </div>
     <?php if ($block->isEnabledQty()): ?>
         <input type="number"
                name="qty"
@@ -22,3 +26,18 @@
     </div>
     <button type="submit" class="<?= $block->getData('css_class_button'); ?>"><?= __('Submit') ?></button>
 </form>
+
+<script type="text/x-magento-init">
+   {
+       "*": {
+           "Magento_Ui/js/core/app": {
+               "components": {
+                   "tsatsuraModuleAutocomplete": {
+                       "component": "Amasty_TsatsuraModule/js/koAutocomplete",
+                       "template" : "Amasty_TsatsuraModule/koAutocomplete"
+                   }
+               }
+           }
+       }
+   }
+</script>
