@@ -19,10 +19,9 @@ define(['uiComponent', 'jquery', 'mage/url'], function (Component, $, urlBuilder
                     $.getJSON(this.searchUrl, {
                         sku: searchValue,
                     }, function (data) {
-                        console.log('data', data);
                         this.searchResult(data);
                     }.bind(this));
-                }, 1500);
+                }.bind(this), 1500);
             } else {
                 this.searchResult([]);
             }
