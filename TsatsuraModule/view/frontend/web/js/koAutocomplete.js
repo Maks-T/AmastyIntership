@@ -5,6 +5,7 @@ define(['uiComponent', 'jquery', 'mage/url'], function (Component, $, urlBuilder
         searchUrl: urlBuilder.build('tsatsura/index/search'),
         minChar: 3,
         timerId: null,
+        delayQuery: 1500,
         initObservable: function () {
             this._super();
             this.observe(['searchText', 'searchResult']);
@@ -24,7 +25,7 @@ define(['uiComponent', 'jquery', 'mage/url'], function (Component, $, urlBuilder
                         $('.autocomplete-list').removeClass('load');
                         this.searchResult(data);
                     }.bind(this));
-                }.bind(this), 1500);
+                }.bind(this), this.delayQuery);
             } else {
                 $('.autocomplete-list').addClass('hide');
                 this.searchResult([]);
