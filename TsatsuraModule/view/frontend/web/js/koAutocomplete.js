@@ -3,6 +3,7 @@ define(['uiComponent', 'jquery', 'mage/url'], function (Component, $, urlBuilder
         searchText: '',
         searchResult: [],
         searchUrl: urlBuilder.build('tsatsura/index/search'),
+        minChar: 3,
         timerId: null,
         initObservable: function () {
             this._super();
@@ -14,15 +15,18 @@ define(['uiComponent', 'jquery', 'mage/url'], function (Component, $, urlBuilder
             this.searchText.subscribe(this.handleAutocomplete.bind(this));
         },
         handleAutocomplete: function (searchValue) {
-            if (searchValue.length >= 3) {
+            if (searchValue.length >= this.minChar) {
+                $('.autocomplete-list').removeClass('hide').addClass('load');
                 this.delayQuery(function () {
                     $.getJSON(this.searchUrl, {
                         sku: searchValue,
                     }, function (data) {
+                        $('.autocomplete-list').removeClass('load');
                         this.searchResult(data);
                     }.bind(this));
                 }.bind(this), 1500);
             } else {
+                $('.autocomplete-list').addClass('hide');
                 this.searchResult([]);
             }
         },
