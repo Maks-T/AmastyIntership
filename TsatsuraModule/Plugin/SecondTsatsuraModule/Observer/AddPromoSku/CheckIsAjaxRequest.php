@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Amasty\TsatsuraModule\Plugin\SecondTsatsuraModule\Observer\AddPromoSku;
 
 use Magento\Framework\App\RequestInterface;

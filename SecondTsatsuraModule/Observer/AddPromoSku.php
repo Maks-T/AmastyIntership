@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Amasty\SecondTsatsuraModule\Observer;
 
 use Amasty\SecondTsatsuraModule\Model\ConfigProvider;
@@ -65,7 +67,7 @@ class AddPromoSku implements ObserverInterface
                         $quote = $this->checkoutSession->getQuote();
                         $quote->addProduct($promoProduct, 1);
                         $quote->save();
-                        $this->messageManager->addSuccessMessage('Promo product is added');
+                        $this->messageManager->addSuccessMessage(__('Promo product is added'));
                     }
                 }
             }

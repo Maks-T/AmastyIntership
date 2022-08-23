@@ -69,6 +69,7 @@ class ChangeProductData
 
             return $subject;
         } catch (NoSuchEntityException $e) {
+
             return $this->messageManager->addErrorMessage($e->getMessage());
         }
     }

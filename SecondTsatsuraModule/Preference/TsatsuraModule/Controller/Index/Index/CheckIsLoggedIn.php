@@ -84,7 +84,8 @@ class CheckIsLoggedIn extends Index
         if($this->customerSession->isLoggedIn()) {
             return parent::execute();
         } else {
-            $this->messageManager->addErrorMessage('You must confirm your account.');
+            $this->messageManager->addErrorMessage(__('You must confirm your account.'));
+
             return $this->redirectFactory->create()->setPath('customer/account/create');
         }
     }
