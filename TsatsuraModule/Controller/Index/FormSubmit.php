@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Amasty\TsatsuraModule\Controller\Index;
 
 use Magento\Catalog\Api\ProductRepositoryInterface;
-use Magento\Framework\Controller\ResultInterface;
 use Magento\Catalog\Model\Product\Type;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\App\ActionInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\Response\RedirectInterface;
 use Magento\Framework\Controller\ResultFactory;
+use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Event\ManagerInterface as EventManager;
 use Magento\Framework\Message\ManagerInterface;
 use Magento\Quote\Model\QuoteRepository;
 
@@ -19,6 +20,8 @@ class FormSubmit implements ActionInterface
 {
     public const SKU_PARAM = 'sku';
     public const QTY_PARAM = 'qty';
+    public const PRODUCT_ADDED_EVENT = 'amasty_add_product_to_cart';
+    public const PRODUCT_ADDED_SKU = 'product_added_sku';
 
     /**
      * @var ResultFactory
@@ -55,6 +58,11 @@ class FormSubmit implements ActionInterface
      */
     private $quoteRepository;
 
+    /**
+     * @var EventManager
+     */
+    private $eventManager;
+
     public function __construct(
         ResultFactory $resultFactory,
         Session $checkoutSession,
@@ -62,7 +70,8 @@ class FormSubmit implements ActionInterface
         RequestInterface $request,
         RedirectInterface $redirect,
         ManagerInterface $messageManager,
-        QuoteRepository $quoteRepository
+        QuoteRepository $quoteRepository,
+        EventManager $eventManager
     ) {
         $this->resultFactory = $resultFactory;
         $this->checkoutSession = $checkoutSession;
@@ -71,6 +80,7 @@ class FormSubmit implements ActionInterface
         $this->redirect = $redirect;
         $this->messageManager = $messageManager;
         $this->quoteRepository = $quoteRepository;
+        $this->eventManager = $eventManager;
     }
 
     public function execute(): ResultInterface
@@ -99,6 +109,11 @@ class FormSubmit implements ActionInterface
             $this->messageManager->addSuccessMessage
             (
                 __('Product with SKU=%1 in the amount of %2 pieces added to cart', $productSkuValue, $productQtyValue)
+            );
+
+            $this->eventManager->dispatch(
+                self::PRODUCT_ADDED_EVENT,
+                [self::PRODUCT_ADDED_SKU => $productSkuValue]
             );
         } catch (\Exception $e) {
             $this->messageManager->addErrorMessage($e->getMessage());

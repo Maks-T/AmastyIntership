@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Tsatsura, Inc. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="Amasty_SecondTsatsuraModule" translate="label" sortOrder="10">
+            <label>Amasty Second Tsatsura Module</label>
+        </tab>
+        <section id="second_tsatsura_config" type="text" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1"
+                 showInStore="1">
+            <label>Second Tsatsura Module Config</label>
+            <tab>Amasty_SecondTsatsuraModule</tab>
+            <resource>Amasty_SecondTsatsuraModule::config</resource>
+            <group id="general" translate="label" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Configuration</label>
+                <field id="enabled" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Is Module Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="promo_product" translate="label" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Promo Product Configuration</label>
+                <field id="promo_sku" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Promo SKU</label>
+                </field>
+                <field id="for_sku" type="textarea" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>For SKU</label>
+                </field>
+                <depends>
+                    <field id="second_tsatsura_config/general/enabled">1</field>
+                </depends>
+            </group>
+        </section>
+    </system>
+</config>
