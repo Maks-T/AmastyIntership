@@ -9,4 +9,8 @@
         <plugin name="Amasty_SecondTsatsuraModule::changeFormAction"
                 type="Amasty\SecondTsatsuraModule\Plugin\TsatsuraModule\Block\Form\ChangeFormAction" />
     </type>
+    <type name="Magento\Checkout\Controller\Cart\Add">
+        <plugin name="Amasty_SecondTsatsuraModule::changeProductData"
+                type="Amasty\SecondTsatsuraModule\Plugin\Checkout\Controller\Cart\Add\ChangeProductData"/>
+    </type>
 </config>

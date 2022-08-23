@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Amasty\TsatsuraModule\Controller\Index;
 
 use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Framework\Controller\ResultInterface;
 use Magento\Catalog\Model\Product\Type;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\App\ActionInterface;
@@ -72,7 +73,7 @@ class FormSubmit implements ActionInterface
         $this->quoteRepository = $quoteRepository;
     }
 
-    public function execute()
+    public function execute(): ResultInterface
     {
         $quote = $this->checkoutSession->getQuote();
 
@@ -106,7 +107,7 @@ class FormSubmit implements ActionInterface
         return $this->resultRedirect();
     }
 
-    private function resultRedirect()
+    private function resultRedirect(): ResultInterface
     {
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
         $resultRedirect->setUrl($this->redirect->getRefererUrl());
