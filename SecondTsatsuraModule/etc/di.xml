@@ -13,4 +13,6 @@
         <plugin name="Amasty_SecondTsatsuraModule::changeProductData"
                 type="Amasty\SecondTsatsuraModule\Plugin\Checkout\Controller\Cart\Add\ChangeProductData" disabled="true"/>
     </type>
+        <preference for="Amasty\TsatsuraModule\Controller\Index\Index"
+                    type="Amasty\SecondTsatsuraModule\Preference\TsatsuraModule\Controller\Index\Index\CheckIsLoggedIn"/>
 </config>
