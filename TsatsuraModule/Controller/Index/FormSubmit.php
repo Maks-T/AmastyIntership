@@ -11,11 +11,18 @@ use Magento\Framework\App\ActionInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\Response\RedirectInterface;
 use Magento\Framework\Controller\ResultFactory;
+use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Event\ManagerInterface as EventManager;
 use Magento\Framework\Message\ManagerInterface;
 use Magento\Quote\Model\QuoteRepository;
 
 class FormSubmit implements ActionInterface
 {
+    public const SKU_PARAM = 'sku';
+    public const QTY_PARAM = 'qty';
+    public const PRODUCT_ADDED_EVENT = 'amasty_add_product_to_cart';
+    public const PRODUCT_ADDED_SKU = 'product_added_sku';
+
     /**
      * @var ResultFactory
      */
@@ -51,6 +58,11 @@ class FormSubmit implements ActionInterface
      */
     private $quoteRepository;
 
+    /**
+     * @var EventManager
+     */
+    private $eventManager;
+
     public function __construct(
         ResultFactory $resultFactory,
         Session $checkoutSession,
@@ -58,7 +70,8 @@ class FormSubmit implements ActionInterface
         RequestInterface $request,
         RedirectInterface $redirect,
         ManagerInterface $messageManager,
-        QuoteRepository $quoteRepository
+        QuoteRepository $quoteRepository,
+        EventManager $eventManager
     ) {
         $this->resultFactory = $resultFactory;
         $this->checkoutSession = $checkoutSession;
@@ -67,9 +80,10 @@ class FormSubmit implements ActionInterface
         $this->redirect = $redirect;
         $this->messageManager = $messageManager;
         $this->quoteRepository = $quoteRepository;
+        $this->eventManager = $eventManager;
     }
 
-    public function execute()
+    public function execute(): ResultInterface
     {
         $quote = $this->checkoutSession->getQuote();
 
@@ -78,14 +92,14 @@ class FormSubmit implements ActionInterface
          }
 
         try {
-            $productSkuValue = $this->request->getParam('sku');
-            $productQtyValue = $this->request->getParam('qty');
+            $productSkuValue = $this->request->getParam(self::SKU_PARAM);
+            $productQtyValue = $this->request->getParam(self::QTY_PARAM);
             $product = $this->productRepository->get($productSkuValue);
 
             if ($product->getTypeId() !== Type::TYPE_SIMPLE) {
                 $this->messageManager->addWarningMessage
                 (
-                    __("Product with SKU={$productSkuValue} is a {$product->getTypeId()} type. Only simple product is available")
+                    __('Product with SKU=%1 is a %2 type. Only simple product is available', $productSkuValue, $product->getTypeId())
                 );
 
                 return $this->resultRedirect();
@@ -94,7 +108,12 @@ class FormSubmit implements ActionInterface
             $this->quoteRepository->save($quote);
             $this->messageManager->addSuccessMessage
             (
-                __("Product with SKU={$productSkuValue} in the amount of {$productQtyValue} pieces added to cart")
+                __('Product with SKU=%1 in the amount of %2 pieces added to cart', $productSkuValue, $productQtyValue)
+            );
+
+            $this->eventManager->dispatch(
+                self::PRODUCT_ADDED_EVENT,
+                [self::PRODUCT_ADDED_SKU => $productSkuValue]
             );
         } catch (\Exception $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
@@ -103,7 +122,7 @@ class FormSubmit implements ActionInterface
         return $this->resultRedirect();
     }
 
-    private function resultRedirect()
+    private function resultRedirect(): ResultInterface
     {
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
         $resultRedirect->setUrl($this->redirect->getRefererUrl());

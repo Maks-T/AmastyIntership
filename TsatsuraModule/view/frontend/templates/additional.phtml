@@ -1,1 +1,19 @@
-Здесь будет таймер, который я сделаю в другом задании
+<div data-bind="scope:'tsatsuraModuleStopwatch'">
+    <!-- ko template : getTemplate() -->
+    <!-- /ko -->
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "tsatsuraModuleStopwatch": {
+                        "component": "Amasty_TsatsuraModule/js/koStopwatch",
+                        "template": "Amasty_TsatsuraModule/koStopwatch"
+                    }
+                }
+            }
+        }
+    }
+</script>

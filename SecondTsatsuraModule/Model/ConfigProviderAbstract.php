@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Amasty\TsatsuraModule\Model;
+namespace Amasty\SecondTsatsuraModule\Model;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\StoreManagerInterface;
@@ -12,7 +12,7 @@ abstract class ConfigProviderAbstract
     /**
      * @var string
      */
-    protected $pathPrefix = 'tsatsura_config/';
+    protected $pathPrefix = 'second_tsatsura_config/';
 
     /**
      * @var ScopeConfigInterface

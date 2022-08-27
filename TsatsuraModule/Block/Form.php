@@ -9,7 +9,7 @@ use Magento\Framework\View\Element\Template;
 
 class Form extends Template
 {
-    const FORM_ACTION = 'tsatsura/index/formsubmit';
+    public const FORM_ACTION = 'tsatsura/index/formsubmit';
 
     /**
      * @var ConfigProvider
@@ -20,8 +20,7 @@ class Form extends Template
         Template\Context $context,
         ConfigProvider $configProvider,
         array $data = []
-    )
-    {
+    ) {
         parent::__construct($context, $data);
 
         $this->configProvider = $configProvider;
@@ -37,7 +36,7 @@ class Form extends Template
         return $this->configProvider->getValueQty();
     }
 
-    public function getFormAction()
+    public function getFormAction(): string
     {
         return $this->getUrl(self::FORM_ACTION, ['_secure' => true]);
     }

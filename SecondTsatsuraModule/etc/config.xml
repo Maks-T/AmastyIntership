@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Tsatsura, Inc. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <second_tsatsura_config>
+            <general>
+                <enabled>1</enabled>
+            </general>
+            <promo_product>
+                <promo_sku>TS-HV</promo_sku>
+                <for_sku>24-MB01, 24-MB02, 24-MB03</for_sku>
+            </promo_product>
+        </second_tsatsura_config>
+    </default>
+</config>

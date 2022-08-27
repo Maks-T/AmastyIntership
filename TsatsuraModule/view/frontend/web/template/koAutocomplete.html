@@ -1,0 +1,14 @@
+<div>
+    <label for="tsatsura-search-input" class="form-submit__label">Search for sku: </label>
+    <input type="text"
+           name="sku"
+           required="true"
+           id="tsatsura-search-input"
+           data-bind="textInput: searchText, class: 'form-submit__input'"/>
+        <ul data-bind="foreach: searchResult" class="autocomplete-list hide">
+            <li class="autocomplete-list__item">
+                <div data-bind="text: sku"></div>
+                <div data-bind="text: name"></div>
+            </li>
+        </ul>
+</div>
