@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Amasty\TsatsuraModule\Controller\Index;
 
+use Amasty\TsatsuraModule\Model\Blacklist;
+use Amasty\TsatsuraModule\Model\BlacklistRepository;
 use Magento\Catalog\Api\ProductRepositoryInterface;
-use Magento\Catalog\Model\Product\Type;
 use Magento\Catalog\Model\Product;
+use Magento\Catalog\Model\Product\Type;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\App\ActionInterface;
 use Magento\Framework\App\RequestInterface;
@@ -14,11 +16,10 @@ use Magento\Framework\App\Response\RedirectInterface;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Event\ManagerInterface as EventManager;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Message\ManagerInterface;
-use Magento\Quote\Model\QuoteRepository;
-use Amasty\TsatsuraModule\Model\BlacklistRepository;
 use Magento\Quote\Model\Quote;
-
+use Magento\Quote\Model\QuoteRepository;
 
 class FormSubmit implements ActionInterface
 {
@@ -111,15 +112,12 @@ class FormSubmit implements ActionInterface
                 return $this->resultRedirect();
             }
 
-            $blacklistProduct = $this->blacklistRepository->getBySku($product->getSku());
-
-            if (empty($blacklistProduct)) {
-                $this->addProductToQuote($quote, $product, $productSkuValue, $productQtyValue);
-            } else {
-                echo 'product in blacklist';
-            }
-
-
+            $this->checkProductAndAddToQuote(
+                $quote,
+                $product,
+                $productSkuValue,
+                $productQtyValue
+            );
         } catch (\Exception $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
         }
@@ -127,7 +125,43 @@ class FormSubmit implements ActionInterface
         return $this->resultRedirect();
     }
 
-    private function addProductToQuote(Quote $quote, Product $product, string $productSkuValue, string $productQtyValue) {
+    /**
+     * @throws LocalizedException
+     */
+    private function checkProductAndAddToQuote(
+        Quote $quote,
+        Product $product,
+        string $productSkuValue,
+        string $productQtyValue
+    ): void {
+        $blacklistProduct = $this->blacklistRepository->getBySku($product->getSku());
+
+        if ($blacklistProduct->isEmpty()) {
+            $this->addProductToQuote(
+                $quote,
+                $product,
+                $productSkuValue,
+                $productQtyValue);
+        } else {
+            $this->addProductFromBlackList(
+                $quote,
+                $product,
+                $productSkuValue,
+                $productQtyValue,
+                $blacklistProduct
+            );
+        }
+    }
+
+    /**
+     * @throws LocalizedException
+     */
+    private function addProductToQuote(
+        Quote $quote,
+        Product $product,
+        string $productSkuValue,
+        string $productQtyValue
+    ): void {
         $quote->addProduct($product, $productQtyValue);
         $this->quoteRepository->save($quote);
         $this->messageManager->addSuccessMessage
@@ -141,6 +175,49 @@ class FormSubmit implements ActionInterface
         );
     }
 
+    /**
+     * @throws LocalizedException
+     */
+    private function addProductFromBlackList(
+        Quote $quote,
+        Product $product,
+        string $productSkuValue,
+        string $productQtyValue,
+        Blacklist $blacklistProduct
+    ): void {
+        $qtyProductInQuote = $this->getQtyInQuote($quote, $product);
+        $qtyProductInBlacklist = $blacklistProduct->getProductQty();
+
+        if ($qtyProductInQuote + $productQtyValue > $qtyProductInBlacklist) {
+            $allowedQty = $qtyProductInBlacklist - $qtyProductInQuote;
+            if ($allowedQty > 0) {
+                $this->messageManager->addErrorMessage(
+                    __('The product with SKU=%1 is in the blacklist in the amount of %2 pieces. ' .
+                        'Currently there are %3 pieces in the cart of this product. ' .
+                        'Only %4 products were added to the cart',
+                        $productSkuValue, $qtyProductInBlacklist, $qtyProductInQuote, $allowedQty)
+                );
+                $this->addProductToQuote($quote, $product, $productSkuValue, (string)$allowedQty);
+            } else {
+                $this->messageManager->addErrorMessage(
+                    __('The product with SKU=%1 is in the blacklist in the amount of %2 pieces. ' .
+                        'Currently there are %3 pieces in the cart of this product. ' .
+                        'The product has not been added',
+                        $productSkuValue, $qtyProductInBlacklist, $qtyProductInQuote)
+                );
+            }
+        } else {
+            {
+                $this->addProductToQuote(
+                    $quote,
+                    $product,
+                    $productSkuValue,
+                    $productQtyValue
+                );
+            }
+        }
+    }
+
     private function isProductSimple(Product $product, string $productSkuValue): bool
     {
         if ($product->getTypeId() !== Type::TYPE_SIMPLE) {
@@ -148,9 +225,26 @@ class FormSubmit implements ActionInterface
             (
                 __('Product with SKU=%1 is a %2 type. Only simple product is available', $productSkuValue, $product->getTypeId())
             );
+
             return true;
         }
+
         return false;
+    }
+
+    private function getQtyInQuote(Quote $quote, Product $product): int
+    {
+        $quoteItems = $quote->getItems();
+        $qtyInQuote = 0;
+
+        foreach ($quoteItems as $item) {
+            if ($item->getSku() === $product->getSku()) {
+                $qtyInQuote = $item->getQty();
+                break;
+            }
+        }
+
+        return (int)$qtyInQuote;
     }
 
     private function resultRedirect(): ResultInterface
