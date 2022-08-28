@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Tsatsura, Inc. All rights reserved.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="amasty_tsatsuramodule_blacklist" resource="default" engine="innodb" comment="Amasty Blacklist Tabl">
+        <column xsi:type="int" name="entity_id" padding="10" nullable="false" identity="true" unsigned="true"
+                comment="Entity ID"/>
+        <column xsi:type="varchar" name="product_sku" nullable="false" default="" length="255" comment="Product SKU"/>
+        <column xsi:type="int" name="product_qty" padding="10" nullable="false" unsigned="true" comment="Product QTY"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+    </table>
+</schema>
