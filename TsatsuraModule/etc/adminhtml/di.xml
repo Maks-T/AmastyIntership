@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Tsatsura, Inc. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="tsatsura_blacklist_listing_data_source" xsi:type="string">
+                    Amasty\TsatsuraModule\Model\ResourceModel\Blacklist\Grid\Collection
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Amasty\TsatsuraModule\Model\ResourceModel\Blacklist\Grid\Collection"
+                 type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">amasty_tsatsuramodule_blacklist</argument>
+            <argument name="resourceModel" xsi:type="string">Amasty\TsatsuraModule\Model\ResourceModel\Blacklist</argument>
+        </arguments>
+    </virtualType>
+</config>

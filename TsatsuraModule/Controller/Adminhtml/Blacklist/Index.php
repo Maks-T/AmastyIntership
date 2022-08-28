@@ -21,6 +21,7 @@ class Index implements ActionInterface
     public function execute()
     {
         $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
+        $resultPage->setActiveMenu('Amasty_TsatsuraModule::blacklist');
         $resultPage->getConfig()->getTitle()->prepend(__('Blacklist'));
 
         return $resultPage;

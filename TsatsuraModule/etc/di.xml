@@ -9,4 +9,5 @@
         <plugin name="Amasty_SecondTsatsuraModule::checkIsAjaxRequest"
                 type="Amasty\TsatsuraModule\Plugin\SecondTsatsuraModule\Observer\AddPromoSku\CheckIsAjaxRequest"/>
     </type>
+    <preference for="Amasty\TsatsuraModule\Api\BlacklistRepositoryInterface" type="Amasty\TsatsuraModule\Model\BlacklistRepository"/>
 </config>

@@ -16,7 +16,7 @@
         <add id="Amasty_TsatsuraModule::blacklist"
              title="Blacklist"
              module="Amasty_TsatsuraModule"
-             sortOrder="30"
+             sortOrder="70"
              resource="Amasty_TsatsuraModule::blacklist"
              parent="Amasty_TsatsuraModule::menu"
              action="tsatsura/blacklist"

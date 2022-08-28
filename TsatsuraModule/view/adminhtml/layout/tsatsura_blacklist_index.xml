@@ -9,11 +9,7 @@
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="content">
-            <container name="Amasty_Tsatsura.mainadmin">
-                <block name="Amasty_Tsatsura.hello"
-                       template="Amasty_TsatsuraModule::hello.phtml">
-                </block>
-            </container>
+            <uiComponent name="tsatsura_blacklist_listing"/>
         </referenceContainer>
     </body>
 </page>
