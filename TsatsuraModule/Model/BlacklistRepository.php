@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Amasty\TsatsuraModule\Model;
 
 use Amasty\TsatsuraModule\Api\BlacklistRepositoryInterface;
-use Amasty\TsatsuraModule\Model\BlacklistFactory;
 use Amasty\TsatsuraModule\Model\ResourceModel\Blacklist as BlacklistResource;
 
 class BlacklistRepository implements BlacklistRepositoryInterface
 {
+    public const ID_FIELD_NAME_PRODUCT_SKU = 'product_sku';
+
     /**
      * @var BlacklistFactory
      */
@@ -34,10 +35,22 @@ class BlacklistRepository implements BlacklistRepositoryInterface
         $this->blacklistResource->load(
             $blacklist,
             $productSku,
-            'product_sku'
+            self::ID_FIELD_NAME_PRODUCT_SKU
         );
 
         return $blacklist;
+    }
+
+    public function deleteBySku($productSku): void
+    {
+        $blacklist = $this->blacklistFactory->create();
+        $this->blacklistResource->load(
+            $blacklist,
+            $productSku,
+            self::ID_FIELD_NAME_PRODUCT_SKU
+        );
+
+        $this->blacklistResource->delete($productSku);
     }
 
     public function setProductQty($productSku, $productQty): void
@@ -46,7 +59,7 @@ class BlacklistRepository implements BlacklistRepositoryInterface
         $this->blacklistResource->load(
             $blacklist,
             $productSku,
-            'product_sku'
+            self::ID_FIELD_NAME_PRODUCT_SKU
         );
         $blacklist->setProductQty($productQty);
         $this->blacklistResource->save($blacklist);

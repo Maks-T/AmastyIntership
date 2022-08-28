@@ -17,6 +17,7 @@ use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Event\ManagerInterface as EventManager;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Message\ManagerInterface;
 use Magento\Quote\Model\Quote;
 use Magento\Quote\Model\QuoteRepository;
@@ -109,6 +110,7 @@ class FormSubmit implements ActionInterface
             $product = $this->productRepository->get($productSkuValue);
 
             if ($this->isProductSimple($product, $productSkuValue)) {
+
                 return $this->resultRedirect();
             }
 
@@ -166,7 +168,11 @@ class FormSubmit implements ActionInterface
         $this->quoteRepository->save($quote);
         $this->messageManager->addSuccessMessage
         (
-            __('Product with SKU=%1 in the amount of %2 pieces added to cart', $productSkuValue, $productQtyValue)
+            __(
+                'Product with SKU=%1 in the amount of %2 pieces added to cart',
+                $productSkuValue,
+                $productQtyValue
+            )
         );
 
         $this->eventManager->dispatch(
@@ -192,18 +198,22 @@ class FormSubmit implements ActionInterface
             $allowedQty = $qtyProductInBlacklist - $qtyProductInQuote;
             if ($allowedQty > 0) {
                 $this->messageManager->addErrorMessage(
-                    __('The product with SKU=%1 is in the blacklist in the amount of %2 pieces. ' .
+                    __(
+                        'The product with SKU=%1 is in the blacklist in the amount of %2 pieces. ' .
                         'Currently there are %3 pieces in the cart of this product. ' .
                         'Only %4 products were added to the cart',
-                        $productSkuValue, $qtyProductInBlacklist, $qtyProductInQuote, $allowedQty)
+                        $productSkuValue, $qtyProductInBlacklist, $qtyProductInQuote, $allowedQty
+                    )
                 );
                 $this->addProductToQuote($quote, $product, $productSkuValue, (string)$allowedQty);
             } else {
                 $this->messageManager->addErrorMessage(
-                    __('The product with SKU=%1 is in the blacklist in the amount of %2 pieces. ' .
+                    __(
+                        'The product with SKU=%1 is in the blacklist in the amount of %2 pieces. ' .
                         'Currently there are %3 pieces in the cart of this product. ' .
                         'The product has not been added',
-                        $productSkuValue, $qtyProductInBlacklist, $qtyProductInQuote)
+                        $productSkuValue, $qtyProductInBlacklist, $qtyProductInQuote
+                    )
                 );
             }
         } else {
@@ -216,20 +226,6 @@ class FormSubmit implements ActionInterface
                 );
             }
         }
-    }
-
-    private function isProductSimple(Product $product, string $productSkuValue): bool
-    {
-        if ($product->getTypeId() !== Type::TYPE_SIMPLE) {
-            $this->messageManager->addWarningMessage
-            (
-                __('Product with SKU=%1 is a %2 type. Only simple product is available', $productSkuValue, $product->getTypeId())
-            );
-
-            return true;
-        }
-
-        return false;
     }
 
     private function getQtyInQuote(Quote $quote, Product $product): int
@@ -245,6 +241,24 @@ class FormSubmit implements ActionInterface
         }
 
         return (int)$qtyInQuote;
+    }
+
+    private function isProductSimple(Product $product, string $productSkuValue): bool
+    {
+        if ($product->getTypeId() !== Type::TYPE_SIMPLE) {
+            $this->messageManager->addWarningMessage
+            (
+                __(
+                    'Product with SKU=%1 is a %2 type. Only simple product is available',
+                    $productSkuValue,
+                    $product->getTypeId()
+                )
+            );
+
+            return true;
+        }
+
+        return false;
     }
 
     private function resultRedirect(): ResultInterface

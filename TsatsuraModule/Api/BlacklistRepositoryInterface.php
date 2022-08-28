@@ -10,5 +10,7 @@ interface BlacklistRepositoryInterface
 {
     public function getBySku($productSku): Blacklist;
 
+    public function deleteBySku($productSku): void;
+
     public function setProductQty($productSku, $productQty): void;
 }
