@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Tsatsura, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <container name="Amasty_Tsatsura.mainadmin">
+                <block name="Amasty_Tsatsura.hello"
+                       template="Amasty_TsatsuraModule::hello.phtml">
+                </block>
+            </container>
+        </referenceContainer>
+    </body>
+</page>

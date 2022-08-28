@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Tsatsura, Inc. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Amasty_TsatsuraModule::menu"
+             title="Amasty Tsatsura Module"
+             module="Amasty_TsatsuraModule"
+             sortOrder="30"
+             resource="Amasty_TsatsuraModule::menu"
+        />
+        <add id="Amasty_TsatsuraModule::blacklist"
+             title="Blacklist"
+             module="Amasty_TsatsuraModule"
+             sortOrder="30"
+             resource="Amasty_TsatsuraModule::blacklist"
+             parent="Amasty_TsatsuraModule::menu"
+             action="tsatsura/blacklist"
+        />
+    </menu>
+</config>
