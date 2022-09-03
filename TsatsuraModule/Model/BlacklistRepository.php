@@ -56,7 +56,7 @@ class BlacklistRepository implements BlacklistRepositoryInterface
             'entity_id'=>$blacklist->getId(),
             'product_sku'=>$blacklist->getProductSku(),
             'product_qty'=>$blacklist->getProductQty(),
-        ];;
+        ];
     }
 
     public function deleteBySku(string $productSku): void
