@@ -4,7 +4,8 @@
  * Copyright © Tsatsura, Inc. All rights reserved.
  */
 -->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
         <tsatsura_config>
             <general>
@@ -12,6 +13,8 @@
                 <welcome_text>Hello</welcome_text>
                 <enabled_qty>1</enabled_qty>
                 <qty_value>1</qty_value>
+                <email>maxim.tsatsura@gmail.com</email>
+                <cron_schedule>1 * * * *</cron_schedule>
             </general>
         </tsatsura_config>
     </default>

@@ -30,7 +30,7 @@ abstract class ConfigProviderAbstract
         $this->scopeConfig = $scopeConfig;
     }
 
-    public function getValue($path, $storeId = null, $scope = 'store'): mixed
+    public function getValue( string $path,  string $storeId = null, string $scope = 'store'): string
     {
         return $this->scopeConfig->getValue($this->pathPrefix . $path, $scope, $storeId);
     }

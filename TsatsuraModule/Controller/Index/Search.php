@@ -12,6 +12,7 @@ use Magento\Framework\Controller\ResultFactory;
 class Search implements ActionInterface
 {
     public const SKU_PARAM = 'sku';
+    public const COUNT_SEARCH_ITEMS = '10';
 
     /**
      * @var ResultFactory
@@ -48,12 +49,12 @@ class Search implements ActionInterface
         return $resultJson;
     }
 
-    public function getProductsBySku($searchRequest)
+    private function getProductsBySku(string $searchRequest): array
     {
         $collectionFactory = $this->collectionFactory->create();
         $collectionFactory->addAttributeToFilter('sku', ['like' => "%{$searchRequest}%"]);
         $collectionFactory->addAttributeToSelect('*');
-        $collectionFactory->setPageSize(10);
+        $collectionFactory->setPageSize(self::COUNT_SEARCH_ITEMS);
         $products = [];
 
         foreach ($collectionFactory as $product) {

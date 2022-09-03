@@ -6,6 +6,8 @@ namespace Amasty\TsatsuraModule\Plugin\SecondTsatsuraModule\Observer\AddPromoSku
 
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Message\ManagerInterface;
+use Amasty\SecondTsatsuraModule\Observer\AddPromoSku;
+use Magento\Framework\Event\Observer;
 
 class CheckIsAjaxRequest
 {
@@ -27,7 +29,7 @@ class CheckIsAjaxRequest
         $this->messageManager = $messageManager;
     }
 
-    public function aroundExecute($subject, callable $proceed, $observer)
+    public function aroundExecute(AddPromoSku $subject, callable $proceed, Observer $observer)
     {
         if (!$this->request->isAjax()) {
             return $proceed($observer);

@@ -8,9 +8,15 @@ use Amasty\TsatsuraModule\Model\Blacklist;
 
 interface BlacklistRepositoryInterface
 {
-    public function getBySku($productSku): Blacklist;
+    public function getBySku(string $productSku): Blacklist;
 
-    public function deleteBySku($productSku): void;
+    public function getById(int $id): Blacklist;
 
-    public function setProductQty($productSku, $productQty): void;
+    public function getVarsById(int $id): array;
+
+    public function deleteBySku(string $productSku): void;
+
+    public function setProductQty(string $productSku, string $productQty): void;
+
+    public function setEmailBodyById(int $id, string $emailBody): void;
 }

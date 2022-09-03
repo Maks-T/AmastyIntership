@@ -20,7 +20,7 @@ class ConfigProvider extends ConfigProviderAbstract
         return (string)$this->getValue(self::PROMO_SKU);
     }
 
-    public function getForSku():array
+    public function getForSku(): array
     {
         return array_unique(explode(',', $this->getValue(self::FOR_SKU)));
     }
