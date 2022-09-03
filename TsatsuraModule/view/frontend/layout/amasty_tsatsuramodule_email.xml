@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Tsatsura, Inc. All rights reserved.
+ */
+-->
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <block name="Amasty_TsatsuraModule_Blacklist"
+               class="Amasty\TsatsuraModule\Block\EmailBlacklist"
+               template="Amasty_TsatsuraModule::emailblacklist.phtml"
+               as="amasty_tsatsuramodule_blacklist"
+        >
+        </block>
+    </body>
+</page>

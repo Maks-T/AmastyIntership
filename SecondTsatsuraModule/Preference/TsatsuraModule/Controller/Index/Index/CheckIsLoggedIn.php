@@ -82,6 +82,7 @@ class CheckIsLoggedIn extends Index
     public function execute()
     {
         if($this->customerSession->isLoggedIn()) {
+
             return parent::execute();
         } else {
             $this->messageManager->addErrorMessage(__('You must confirm your account.'));

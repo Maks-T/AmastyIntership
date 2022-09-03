@@ -29,7 +29,7 @@ class BlacklistRepository implements BlacklistRepositoryInterface
         $this->blacklistResource = $blacklistResource;
     }
 
-    public function getBySku($productSku): Blacklist
+    public function getBySku(string $productSku): Blacklist
     {
         $blacklist = $this->blacklistFactory->create();
         $this->blacklistResource->load(
@@ -41,7 +41,25 @@ class BlacklistRepository implements BlacklistRepositoryInterface
         return $blacklist;
     }
 
-    public function deleteBySku($productSku): void
+    public function getById(int $id): Blacklist {
+        $blacklist = $this->blacklistFactory->create();
+        $this->blacklistResource->load($blacklist, $id);
+
+        return $blacklist;
+    }
+
+    public function getVarsById(int $id): array {
+        $blacklist = $this->blacklistFactory->create();
+        $this->blacklistResource->load($blacklist, $id);
+
+        return [
+            'entity_id'=>$blacklist->getId(),
+            'product_sku'=>$blacklist->getProductSku(),
+            'product_qty'=>$blacklist->getProductQty(),
+        ];;
+    }
+
+    public function deleteBySku(string $productSku): void
     {
         $blacklist = $this->blacklistFactory->create();
         $this->blacklistResource->load(
@@ -53,7 +71,7 @@ class BlacklistRepository implements BlacklistRepositoryInterface
         $this->blacklistResource->delete($productSku);
     }
 
-    public function setProductQty($productSku, $productQty): void
+    public function setProductQty(string $productSku, string $productQty): void
     {
         $blacklist = $this->blacklistFactory->create();
         $this->blacklistResource->load(
@@ -62,6 +80,14 @@ class BlacklistRepository implements BlacklistRepositoryInterface
             self::ID_FIELD_NAME_PRODUCT_SKU
         );
         $blacklist->setProductQty($productQty);
+        $this->blacklistResource->save($blacklist);
+    }
+
+    public function setEmailBodyById(int $id, string $emailBody): void
+    {
+        $blacklist = $this->blacklistFactory->create();
+        $this->blacklistResource->load($blacklist, $id);
+        $blacklist->setEmailBody($emailBody);
         $this->blacklistResource->save($blacklist);
     }
 }

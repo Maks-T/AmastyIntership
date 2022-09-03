@@ -39,6 +39,17 @@
                         <field id="enabled_qty">1</field>
                     </depends>
                 </field>
+               <field id="email" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email</label>
+                    <validate>validate-email</validate>
+                </field>
+                <field id="email_template" type="select" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Email Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+                <field id="cron_schedule" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Cron Schedule</label>
+                </field>
             </group>
         </section>
     </system>

@@ -4,9 +4,10 @@
  * Copyright © Tsatsura, Inc. All rights reserved.
  */
 -->
-<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/PageLayout/etc/layouts.xsd">
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/PageLayout/etc/layouts.xsd">
     <head>
-        <css src="Amasty_TsatsuraModule::css/style.css" rel="stylesheet" type="text/css"  />
+        <css src="Amasty_TsatsuraModule::css/style.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <referenceContainer name="content">

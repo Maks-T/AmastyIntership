@@ -165,8 +165,7 @@ class FormSubmit implements ActionInterface
     ): void {
         $quote->addProduct($product, $productQtyValue);
         $this->quoteRepository->save($quote);
-        $this->messageManager->addSuccessMessage
-        (
+        $this->messageManager->addSuccessMessage(
             __(
                 'Product with SKU=%1 in the amount of %2 pieces added to cart',
                 $productSkuValue,
@@ -216,14 +215,12 @@ class FormSubmit implements ActionInterface
                 );
             }
         } else {
-            {
-                $this->addProductToQuote(
-                    $quote,
-                    $product,
-                    $productSkuValue,
-                    $productQtyValue
-                );
-            }
+            $this->addProductToQuote(
+                $quote,
+                $product,
+                $productSkuValue,
+                $productQtyValue
+            );
         }
     }
 

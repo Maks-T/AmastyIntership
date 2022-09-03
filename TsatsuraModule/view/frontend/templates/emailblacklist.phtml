@@ -1,0 +1,11 @@
+<?php
+/** @var \Amasty\TsatsuraModule\Block\EmailBlacklist $block */
+?>
+
+<?php $blackListCollection = $block->getBlacklistCollection();
+foreach ($blackListCollection as $item): ?>
+    <tr>
+        <td> <?= $item->getProductSku(); ?> </td>
+        <td> <?= $item->getProductQty(); ?> </td>
+    </tr>
+<?php endforeach ?>

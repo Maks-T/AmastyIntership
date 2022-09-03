@@ -10,6 +10,8 @@ class ConfigProvider extends ConfigProviderAbstract
     public const QTY_PARAM = 'general/enabled_qty';
     public const QTY_VALUE_PARAM = 'general/qty_value';
     public const WELCOME_TEXT_PARAM = 'general/welcome_text';
+    const EMAIL = 'general/email';
+    const EMAIL_TEMPLATE = 'general/email_template';
 
     public function isModuleEnabled(): bool
     {
@@ -29,5 +31,15 @@ class ConfigProvider extends ConfigProviderAbstract
     public function getWelcomeText(): string
     {
         return (string)$this->getValue(self::WELCOME_TEXT_PARAM);
+    }
+
+    public function getEmail(): string
+    {
+        return (string)$this->getValue(self::EMAIL);
+    }
+
+    public function getEmailTemplate()
+    {
+        return (string)$this->getValue(self::EMAIL_TEMPLATE);
     }
 }
