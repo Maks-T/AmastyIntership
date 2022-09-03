@@ -39,8 +39,8 @@ class EmailBlacklist extends Template
         parent::__construct($context, $data);
     }
 
-    public function getBlacklistCollection(): CollectionFactory
+    public function getBlacklistCollection(): \ArrayIterator
     {
-        return $this->blacklistCollectionFactory->create();
+        return $this->blacklistCollectionFactory->create()->getIterator();
     }
 }
